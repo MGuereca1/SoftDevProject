@@ -12,14 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 
 public class Db_utils {
-    // INSTEAD OF NEW LOGIN DB I MADE A NEW TABLE CALLED USERS IN THE EMPLOYEEDATA DB, THAT WAY IT'LL BE EASIER TO MAKE THE ADMIN/EMPLOYEE FUNCTIONALITY
-    
-    // FOR NOW I WILL USE THE LOGGIN DB AS A TEST
-
-    // !!!!!!!!NEED TO MODIFY TO CHECK IF ADMIN OR EMPLOYEE!!!!!!
-    
-    // to change to specific menu
-
     //modified to chnage to appropriate menu
 public static void changeScene(ActionEvent event, String fxmlFile, String Title, String username, String role) {
     try {
