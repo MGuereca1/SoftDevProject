@@ -23,4 +23,8 @@ import javafx.stage.Stage;
     public static void main(String[] args) {
         launch(args);
     }
-}
+
+ }
+
+//TODO : CHECK IF ADD, UPDATE, DELETE WORKS
+// CHECK TEST CASES
