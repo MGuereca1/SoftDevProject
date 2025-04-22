@@ -5,12 +5,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.EmpController">
-   <children>
-      <Button fx:id="button_logout" layoutX="531.0" layoutY="360.0" mnemonicParsing="false" text="Logout" />
-      <Label fx:id="lbl_welcome" layoutX="286.0" layoutY="5.0" text="welcome!">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font></Label>
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" 
+            xmlns="http://javafx.com/javafx/23.0.1" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.example.EmpController">
+
+    <children>
+
+        <Label fx:id="lbl_welcome" layoutX="286.0" layoutY="5.0" text="welcome!">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font>
+        </Label>
+
+        <Button fx:id="btn_showData" layoutX="20.0" layoutY="100.0" 
+                mnemonicParsing="false" text="Show My Data" 
+                onAction="#showEmployeeData" />
+
+        <Label fx:id="lbl_name" layoutX="20.0" layoutY="150.0" text="Name: " />
+        <Label fx:id="lbl_email" layoutX="20.0" layoutY="180.0" text="Email: " />
+        <Label fx:id="lbl_payroll" layoutX="20.0" layoutY="210.0" text="Payroll: " />
+        <Label fx:id="lbl_statement" layoutX="20.0" layoutY="240.0" text="Statement History: " />
+
+        <Button fx:id="button_logout" layoutX="531.0" layoutY="360.0" 
+                mnemonicParsing="false" text="Logout" />
+
+    </children>
 </AnchorPane>
