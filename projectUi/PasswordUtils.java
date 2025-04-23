@@ -1,5 +1,7 @@
 package com.example;
 
+// used built-in Java algorithm's for password hashing and salting
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.util.Base64;

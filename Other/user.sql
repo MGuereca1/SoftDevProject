@@ -1,3 +1,4 @@
+/* SQL queries to create new Users table in the employeedata database*/
 USE employeedata;
 CREATE TABLE Users(
     empid INT Primary Key AUTO_INCREMENT,
