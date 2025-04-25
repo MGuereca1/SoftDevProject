@@ -16,14 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 public class Db_utils {
-    // INSTEAD OF NEW LOGIN DB I MADE A NEW TABLE CALLED USERS IN THE EMPLOYEEDATA DB, THAT WAY IT'LL BE EASIER TO MAKE THE ADMIN/EMPLOYEE FUNCTIONALITY
-    
-    // FOR NOW I WILL USE THE LOGGIN DB AS A TEST
-
-    // !!!!!!!!NEED TO MODIFY TO CHECK IF ADMIN OR EMPLOYEE!!!!!!
-    
-    // to change to specific menu
-
+   
     //modified to chnage to appropriate menu
 
     // establish a connection to the database
@@ -85,7 +78,9 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
 
     public static void UserLogin(ActionEvent event, String username, String password){
             // make sql query to check credentials
-        String sqlcommand = "SELECT password, salt, role FROM users WHERE username = ?";
+         String sqlcommand = "SELECT password, salt, role FROM users WHERE BINARY username = ?";
+            // added Binary to make the username case sensitive
+            // Can also modify the encoding preferences on the sql database to do this
 
 
         String url = "jdbc:mysql://localhost:3306/employeedata";
