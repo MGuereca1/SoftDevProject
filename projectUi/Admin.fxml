@@ -1,55 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.AdminController">
-
-    <children>
-        <!-- Welcome Label -->
-        <Label fx:id="label_welcome" layoutX="258.0" layoutY="14.0" text="Welcome">
-            <font>
-                <Font size="20.0" />
-            </font>
-        </Label>
-
-        <!-- TableView for Employees -->
-        <TableView fx:id="table_employees" layoutX="20.0" layoutY="80.0" prefWidth="350.0" prefHeight="200.0">
-            <columns>
-                <TableColumn fx:id="col_name" text="Name"/>
-                <TableColumn fx:id="col_email" text="Email"/>
-                <TableColumn fx:id="col_payroll" text="Payroll"/>
-            </columns>
-        </TableView>
-
-        <!-- TextFields for Adding or Updating Employee Information -->
-        <TextField fx:id="tf_name" layoutX="20.0" layoutY="300.0" promptText="Name"/>
-        <TextField fx:id="tf_email" layoutX="200.0" layoutY="300.0" promptText="Email"/>
-        <TextField fx:id="tf_payroll" layoutX="380.0" layoutY="300.0" promptText="Payroll"/>
-
-        <!-- Add, Update, and Delete Buttons -->
-        <Button fx:id="btn_add" layoutX="20.0" layoutY="340.0" text="Add" onAction="#handleAdd"/>
-        <Button fx:id="btn_update" layoutX="100.0" layoutY="340.0" text="Update" onAction="#handleUpdate"/>
-        <Button fx:id="btn_delete" layoutX="180.0" layoutY="340.0" text="Delete" onAction="#handleDelete"/>
-
-        <!-- Logout Button -->
-        <Button fx:id="button_logout" layoutX="531.0" layoutY="380.0" mnemonicParsing="false" text="Logout"/>
-
-        <!-- Search Section -->
-        <TextField fx:id="searchField" layoutX="20.0" layoutY="50.0" promptText="Search by name or email"/>
-        <Button fx:id="btn_search" layoutX="200.0" layoutY="50.0" text="Search" onAction="#handleSearch"/>
-        <Label fx:id="lbl_searchResult" layoutX="390.0" layoutY="50.0"/>
-        
-         <!-- Back Button -->
-         <Button fx:id="btn_backToMenu" layoutX="515.0" layoutY="10" text="Back to Menu" onAction="#handleBackToMenu"/>
-
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.AdminController">
+   <children>
+      <Label fx:id="label_welcome" layoutX="352.0" layoutY="60.0" text="Welcome, Admin!" />
+      <Button fx:id="btn_search" layoutX="475.0" layoutY="106.0" mnemonicParsing="false" onAction="#handleSearch" text="Search " />
+      <TextField fx:id="tf_name" layoutX="52.0" layoutY="209.0" promptText="Name:" />
+      <TextField fx:id="tf_email" layoutX="52.0" layoutY="248.0" promptText="Email:" />
+      <TextField fx:id="tf_salary" layoutX="52.0" layoutY="287.0" promptText="Salary:" />
+      <Button fx:id="btn_add" layoutX="261.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleAdd" text="Add" />
+      <Button fx:id="btn_update" layoutX="391.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleUpdate" text="Update" />
+      <Button fx:id="btn_delete" layoutX="530.0" layoutY="495.0" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
+    
+      <TableView fx:id="table_employees" layoutX="230.0" layoutY="168.0" prefHeight="257.0" prefWidth="470.0">
+        <columns>
+            <TableColumn fx:id="col_empid" prefWidth="75.0" text="empID" />
+          <TableColumn fx:id="col_name" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="col_email" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="col_hireDate" prefWidth="75.0" text="HireDate" />
+            <TableColumn fx:id="col_salary" prefWidth="75.0" text="Salary" />
+            <TableColumn fx:id="col_ssn" prefWidth="75.0" text="SSN" />
+        </columns>
+      </TableView>
+      <Button fx:id="button_logout" layoutX="731.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+      <TextField fx:id="searchField" layoutX="316.0" layoutY="106.0" promptText="Search employee" />
+      <Label fx:id="lbl_searchResult" layoutX="374.0" layoutY="143.0" text="Search Result" />
+      <Button fx:id="btn_backToMenu" layoutX="731.0" layoutY="537.0" mnemonicParsing="false" onAction="#handleBackToMenu" text="Back" />
+      <TextField fx:id="tf_empid" layoutX="52.0" layoutY="168.0" promptText="Employee ID:" />
+      <TextField fx:id="tf_ssn" layoutX="52.0" layoutY="355.0" promptText="SSN" />
+      <DatePicker fx:id="dp_hireDate" layoutX="52.0" layoutY="322.0" promptText="Hire Date:" />
+   </children>
 </AnchorPane>
+
