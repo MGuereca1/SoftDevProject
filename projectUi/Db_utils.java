@@ -1,33 +1,29 @@
 package com.example;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 
 public class Db_utils {
-   
-    //modified to chnage to appropriate menu
 
-    // establish a connection to the database
-    public static Connection getConnection() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/employeedata";  // Your DB URL
-        String dbUser = "root";  // Your DB username
-        String dbPassword = "password";  // Your DB password (make sure it's correct)
+    // database connection settings
+    private static String url = "jdbc:mysql://localhost:3306/employeedata";
+    private static String dbUser = "root";
+    private static String dbPassword = "Password"; //your password
 
-        // Establish and return the connection
+    // made a datbase connection class so ReportsController can also access it
+    public static Connection getConnection() throws SQLException{
         return DriverManager.getConnection(url, dbUser, dbPassword);
     }
+
+    //modified to chnage to appropriate menu
 public static void changeScene(ActionEvent event, String fxmlFile, String Title, String username, String role) {
     try {
         // loads fxml file
@@ -39,13 +35,13 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
 
             switch (role.toLowerCase()) {
                 case "admin":
-                    AdminController adminController = loader.getController();
-                    adminController.setUserInfo(username);                        
+                    AdminController AdminController = loader.getController();
+                    AdminController.setUserInfo(username);                        
                     break;
                 
                 case "employee":
-                    EmpController empController = loader.getController();
-                    empController.setUserInfo(username);
+                    EmpController EmpController = loader.getController();
+                    EmpController.setUserInfo(username);
                     break;
                 
                 default:
@@ -74,7 +70,7 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
     }
 }
 
-     // Handles userLogin and determine the scene the user will get based on their role
+    // Handles userLogin and determine the scene the user will get based on their role
     public static void UserLogin(ActionEvent event, String username, String password){
             // make sql query to check credentials
         String sqlcommand = "SELECT empid, password, salt, role FROM users WHERE BINARY username = ?";
@@ -155,5 +151,5 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
             alert.show();
         }
     }
-    
 }    
+
