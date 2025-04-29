@@ -45,6 +45,9 @@ public class AdminController implements Initializable {
     @FXML private Button btn_backToMenu;
     @FXML private DatePicker dp_hireDate;
 
+    // Report button
+    @FXML
+    private Button Reports_bttn;
 
     @FXML private Label lbl_searchResult; // label to show the result of the search
     private final ObservableList<Employee> employeeList = FXCollections.observableArrayList();
@@ -56,7 +59,12 @@ public class AdminController implements Initializable {
         button_logout.setOnAction(event -> {
             Db_utils.changeScene(event,"primary.fxml", "Log in", null,"admin");
         });
-    
+        
+        // report button to switch to reports page
+        Reports_bttn.setOnAction(event->{
+            Db_utils.changeScene(event, "Reports.fxml", "Reports Menu", null, "admin");
+        });
+        
         //added the following:
         col_empid.setCellValueFactory(cellData -> cellData.getValue().empidProperty().asObject());
         col_name.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
