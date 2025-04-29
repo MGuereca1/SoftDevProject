@@ -82,23 +82,36 @@ public class ReportsController {
     private void handleViewPayByDivision() {
         System.out.println("handleViewPayByDivision clicked"); // debug
         StringBuilder report = new StringBuilder();
-        try (Connection conn = Db_utils.getConnection()) {
 
-            //MODIFY HERE TOO
-            String sql = "SELECT d.Name as division, SUM(e.salary) AS total_salary FROM employees e  JOIN employee_division ed ON e.empid = ed.empid JOIN division d ON ed.div_ID = d.ID GROUP BY d.Name";
-            
+        try (Connection conn = Db_utils.getConnection()) {
+            String sql = "SELECT d.Name AS division, COALESCE(SUM(e.salary), 0) AS total_salary " +
+                         "FROM division d " +
+                        "LEFT JOIN employee_division ed ON d.ID = ed.div_ID " +
+                        "LEFT JOIN employees e ON ed.empid = e.empid " +
+                        "GROUP BY d.Name";
+
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
+            boolean hasData = false;
             while (rs.next()) {
-                report.append("Division: ").append(rs.getString("division"))
-                      .append(", Total Pay: $").append(rs.getDouble("total_salary"))
-                      .append("\n");
+                hasData = true;
+                String divisionName = rs.getString("division");
+                double totalSalary = rs.getDouble("total_salary");
+
+                report.append("Division: ").append(divisionName)
+                    .append(", Total Pay: ").append(String.format("$%,.2f", totalSalary))
+                    .append("\n");
             }
+
+            if (!hasData) {
+                report.append("No division data available.");
+            }
+
             showReport("Total Pay by Division", report.toString());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // For production, consider using a Logger
         }
     }
 
