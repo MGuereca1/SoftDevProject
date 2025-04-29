@@ -74,18 +74,13 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
     }
 }
 
-    // connecting to database
-
+     // Handles userLogin and determine the scene the user will get based on their role
     public static void UserLogin(ActionEvent event, String username, String password){
             // make sql query to check credentials
-         String sqlcommand = "SELECT password, salt, role FROM users WHERE BINARY username = ?";
+        String sqlcommand = "SELECT empid, password, salt, role FROM users WHERE BINARY username = ?";
             // added Binary to make the username case sensitive
             // Can also modify the encoding preferences on the sql database to do this
 
-
-        String url = "jdbc:mysql://localhost:3306/employeedata";
-        String dbUser = "root";
-        String dbPassword = "password"; //Fulcrum318_delta02" 
         
         // connect to database
         try (Connection myConn = DriverManager.getConnection(url, dbUser, dbPassword)) {
@@ -107,6 +102,16 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
                     // rehash the passwird with the stored salt
                     if(PasswordUtils.isPasswordCorrect(password, storedSalt, storedHash)){
 
+
+                        // Store user session info (to be used in emp controller)
+                        int empid = myRS.getInt("empid");
+
+                        Session.empid = empid;
+                        Session.username = username;
+                        Session.role = role;
+
+
+
                         System.out.println("Login Succesful!");
 
                         String fxmlFile=null;
@@ -114,6 +119,7 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
 
                         switch (role.toLowerCase()) {
                             case "admin":
+                                //fxmlFile = "Admin.fxml";
                                 fxmlFile = "Admin.fxml";
                                 Title = "Admin Menu";
                                 break;
@@ -149,4 +155,5 @@ public static void changeScene(ActionEvent event, String fxmlFile, String Title,
             alert.show();
         }
     }
+    
 }    
