@@ -36,6 +36,6 @@
       <TextField fx:id="tf_empid" layoutX="52.0" layoutY="168.0" promptText="Employee ID:" />
       <TextField fx:id="tf_ssn" layoutX="52.0" layoutY="355.0" promptText="SSN" />
       <DatePicker fx:id="dp_hireDate" layoutX="52.0" layoutY="322.0" promptText="Hire Date:" />
+      <Button fx:id="Reports_bttn" layoutX="630.0" layoutY="495.0" mnemonicParsing="false" text="See Reports" />
    </children>
 </AnchorPane>
-
