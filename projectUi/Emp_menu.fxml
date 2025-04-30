@@ -7,24 +7,40 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="lbl_welcome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.EmpController">
-   <children>
-      <Label fx:id="lbl_welcome" layoutX="293.0" layoutY="54.0" text="Welcome!" />
-      <Button fx:id="btn_showData" layoutX="273.0" layoutY="150.0" mnemonicParsing="false" onAction="#showEmployeeData" text="Show My Data" />
-      <VBox fx:id="vbox_employeeInfo" layoutX="419.0" layoutY="63.0" prefHeight="200.0" prefWidth="100.0" visible="false">
-         <children>
-            <Label fx:id="lbl_name" text="Name:" />
-            <Label fx:id="lbl_email" text="Email:" />
-            <Label fx:id="lbl_payroll" text="Payroll:" />
-         </children>
-      </VBox>
-      <Button fx:id="button_logout" layoutX="295.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
-      <TableView fx:id="tbl_statementHistory" layoutX="367.0" layoutY="188.0" prefHeight="200.0" prefWidth="225.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="Date" />
-          <TableColumn prefWidth="75.0" text="Description" />
-            <TableColumn prefWidth="75.0" text="Amount" />
-        </columns>
-      </TableView>
-   </children>
+<AnchorPane prefHeight="525.0" prefWidth="921.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.EmpController">
+    <children>
+        <!-- Welcome Label -->
+        <Label fx:id="lbl_welcome" layoutX="249.0" layoutY="37.0" text="Welcome, [Name] !" />
+
+        <!-- Show Data Button -->
+        <Button fx:id="Stmnt_Bttn" layoutX="254.0" layoutY="94.0" mnemonicParsing="false" onAction="#showEmployeeData" text="Show my Data" />
+
+        <!-- Logout Button -->
+        <Button fx:id="button_logout" layoutX="852.0" layoutY="485.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+
+        <!-- VBox for Employee Info -->
+        <VBox fx:id="vbox_employeeInfo" layoutX="384.0" layoutY="9.0" prefHeight="179.0" prefWidth="486.0" visible="false">
+            <children>
+                <Label fx:id="lbl_name" text="Name:" />
+                <Label fx:id="lbl_email" text="Email:" />
+                <Label fx:id="lbl_salary" text="Salary:" />
+                <Label fx:id="lbl_ssn" text="SSN:" />
+            </children>
+        </VBox>
+
+        <!-- TableView for Payroll Statement -->
+        <TableView fx:id="tbl_statementHistory" layoutX="148.0" layoutY="197.0" prefHeight="200.0" prefWidth="726.0">
+            <columns>
+                <TableColumn fx:id="col_payDate" text="Pay Date" />
+                <TableColumn fx:id="col_earnings" text="Earnings" />
+                <TableColumn fx:id="col_fedTax" text="Federal Tax" />
+                <TableColumn fx:id="col_fedMed" text="Medicare Tax" />
+                <TableColumn fx:id="col_fedSS" text="Social Security" />
+                <TableColumn fx:id="col_stateTax" text="State Tax" />
+                <TableColumn fx:id="col_retire401k" text="Retirement(401k)" />
+                <TableColumn fx:id="col_healthcare" text="Health Care" />
+            </columns>
+        </TableView>
+    </children>
 </AnchorPane>
+
