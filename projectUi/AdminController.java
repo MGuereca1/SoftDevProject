@@ -17,6 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -49,6 +50,12 @@ public class AdminController implements Initializable {
     @FXML
     private Button Reports_bttn;
 
+
+    //radio button to increase salary
+    @FXML
+    private RadioButton rbtn_increase;
+
+
     @FXML private Label lbl_searchResult; // label to show the result of the search
     private final ObservableList<Employee> employeeList = FXCollections.observableArrayList();
     //----------------------------------------------------------------------------------------
@@ -64,6 +71,9 @@ public class AdminController implements Initializable {
         Reports_bttn.setOnAction(event->{
             Db_utils.changeScene(event, "Reports.fxml", "Reports Menu", null, "admin");
         });
+
+        // for radio button
+        rbtn_increase.setOnAction(this::handleIncrease);
         
         //added the following:
         col_empid.setCellValueFactory(cellData -> cellData.getValue().empidProperty().asObject());
@@ -98,27 +108,6 @@ public class AdminController implements Initializable {
 
     //method to load employee database
     private void loadEmployeesFromDatabase() {
-        //debug: can delete later
-        System.out.println("Connecting to DB...");
-
-
-        employeeList.clear();
-
-        //debug
-        try (Connection conn = Db_utils.getConnection();
-            PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) AS total FROM employees");
-            ResultSet rs = stmt.executeQuery()) {
-
-            if (rs.next()) {
-                int total = rs.getInt("total");
-                System.out.println("Employees in DB: " + total);  // This will print the number of employees in your DB
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            lbl_searchResult.setText("Error loading employee count.");
-        }
-        //-------------------------------------------------------------------------
 
         try (Connection conn = Db_utils.getConnection();
              PreparedStatement stmt = conn.prepareStatement("SELECT empid, Fname, Lname, email, HireDate, Salary, SSN FROM employees");
@@ -132,8 +121,6 @@ public class AdminController implements Initializable {
                 String hireDate = rs.getString("HireDate");
                 double salary = rs.getDouble("Salary");
 
-                //debug 
-                System.out.println("Loaded employee: " + fullName);
 
                 Employee emp = new Employee(empid, fullName, email, ssn, hireDate, String.format("$%.2f", salary));
                 employeeList.add(emp);
@@ -142,23 +129,6 @@ public class AdminController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
             lbl_searchResult.setText("Error loading employees.");
-        }
-
-        //debuggin : can delete later
-        if (employeeList.isEmpty()) {
-            System.out.println("No employees loaded from DB — adding test data.");
-        
-            // Example test employee
-            Employee testEmp = new Employee(
-                999,                             // empid
-                "Test User",                     // name
-                "test@example.com",              // email
-                "123-45-6789",                   // ssn
-                "1990-01-01",                    // dob
-                "$1,000.00"                      // payroll
-            );
-        
-            employeeList.add(testEmp);
         }
         
         // Refresh table
@@ -324,9 +294,48 @@ public class AdminController implements Initializable {
         Db_utils.changeScene(event, "primary.fxml", "Log in", null, "admin");
         System.out.println("Admin has logged out.");
     }
-    //TODO: GENERATE TOTAL PAY JOB BY TITLE
+    
 
-    //TODO: GENERATE TOTAL PAY BY DIVISION REPORT
+    // when radio button is clicked automatically increase salary 3.5% if salaray is eqaul to 45,000 and less than or equal to 65,000
+    @FXML
+    void handleIncrease(ActionEvent event) {
+        //make sure an employee from the table is selected
+        Employee selected = table_employees.getSelectionModel().getSelectedItem();
+
+        if(selected == null){
+            showAlert(AlertType.WARNING, "No Employee selected", "Please selecy an employee.");
+            return;
+        }
+
+        try {
+            double currentSalary = Double.parseDouble(selected.getSalary().replace("$", "").replace(",", ""));
+        
+            if (currentSalary >= 45000 && currentSalary <= 65000){
+                double inc_salary = currentSalary * 1.035; // increase 3.5%
+
+                try(Connection conn = Db_utils.getConnection()){
+                    PreparedStatement stmt = conn.prepareStatement("UPDATE employees SET Salary = ? WHERE empid = ?");
+                    stmt.setDouble(1, inc_salary);
+                    stmt.setInt(2, selected.getEmpid());
+                    stmt.executeUpdate();
+
+                    showAlert(AlertType.INFORMATION,"Salary Updated",
+                    String.format("Increased salary from $%.2f to $%.2f", currentSalary, inc_salary));
+                    loadEmployeesFromDatabase();
+            }
+        
+        }else{
+            showAlert(AlertType.INFORMATION, "Salary Not in Range", "Salary must be in range $45,000 - $65,000 to be increased.");
+            }
+        } 
+        catch (Exception e) {
+            showAlert(AlertType.ERROR, "Error", "Salary could not be increased");
+            e.printStackTrace();
+        }
+        //to unselect radio button
+        rbtn_increase.setSelected(false);
+    }
+
 
     //---------------------------------------------------------------------------------
     // return  username on welcome
